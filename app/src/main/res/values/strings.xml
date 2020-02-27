@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">WeatherForecastApp</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="firstFragmentText">Today\'s Weather</string>
+    <string name="secondFragmentText">Search Weather</string>
+    <string name="thirdFragmentText">Set Notification</string>
+
+    <string name="tab_label1">Today\'s Weather</string>
+    <string name="tab_label2">Search Weather</string>
+    <string name="tab_label3">Set Notification</string>
+    <string name="loading">"Loading. . . "</string>
+</resources>

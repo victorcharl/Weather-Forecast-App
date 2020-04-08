@@ -1,53 +1,116 @@
 package com.victorcharl.weatherforecastapp;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.widget.TableLayout;
+import android.text.Html;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.android.material.tabs.TabLayout;
+import com.androdocs.httprequest.HttpRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    androidx.appcompat.widget.Toolbar toolbar;
-    com.google.android.material.tabs.TabLayout tableLayout;
+
+    private static String API_KEY = "bd154dbe4caf8a49b5926c34fcfa6dcd";
+
+    String currentLocation = "calgary";
+
+    LinearLayout viewPagerIndicator;
+    TextView[] pagerIndicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        tableLayout = findViewById(R.id.tab_layout);
-        tableLayout.addTab(tableLayout.newTab().setText(R.string.tab_label1));
-        tableLayout.addTab(tableLayout.newTab().setText(R.string.tab_label2));
-        tableLayout.addTab(tableLayout.newTab().setText(R.string.tab_label3));
-        tableLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        viewPagerIndicator = (LinearLayout)findViewById(R.id.viewPageIndicator);
 
         final androidx.viewpager.widget.ViewPager viewPager = findViewById(R.id.pager);
         final PagerAdapter adapter = new PagerAdapter
-                (getSupportFragmentManager(), tableLayout.getTabCount());
+                (getSupportFragmentManager(), 3);
         viewPager.setAdapter(adapter);
 
-        //transitions between pages
-        viewPager.addOnPageChangeListener(new
-                TabLayout.TabLayoutOnPageChangeListener(tableLayout));
-        tableLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-            }
+        viewPageIndicator();
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
+        new getWeather().execute();
 
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-            }
-        });
+
     }
+
+    public void viewPageIndicator(){
+        pagerIndicator = new TextView[3];
+
+        for(int i = 0; i < pagerIndicator.length; i++)
+        {
+            pagerIndicator[i] = new TextView(this);
+            pagerIndicator[i].setText(Html.fromHtml("&#8226;"));
+            pagerIndicator[i].setTextSize(35);
+            pagerIndicator[i].setTextColor(getResources().getColor(R.color.colorAccent));
+
+            viewPagerIndicator.addView(pagerIndicator[i]);
+        }
+    }
+
+    class getWeather extends AsyncTask<String, Void, String>{
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        protected String doInBackground(String... args) {
+            return HttpRequest.excuteGet("https://api.openweathermap.org/data/2.5/weather?q=" + currentLocation + "&units=metric&appid=" + API_KEY);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+
+            try {
+                JSONObject jsonObj = new JSONObject(result);
+                JSONObject main = jsonObj.getJSONObject("main");
+                JSONObject sys = jsonObj.getJSONObject("sys");
+                JSONObject wind = jsonObj.getJSONObject("wind");
+                JSONObject weather = jsonObj.getJSONArray("weather").getJSONObject(0);
+
+                Long updatedAt = jsonObj.getLong("dt");
+                String updatedAtText = "Updated at: " + new SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.ENGLISH).format(new Date(updatedAt * 1000));
+                String temp = main.getString("temp") + "°C";
+                String tempMin = "Min Temp: " + main.getString("temp_min") + "°C";
+                String tempMax = "Max Temp: " + main.getString("temp_max") + "°C";
+                String pressure = main.getString("pressure");
+                String humidity = main.getString("humidity");
+
+                Long sunrise = sys.getLong("sunrise");
+                Long sunset = sys.getLong("sunset");
+                String windSpeed = wind.getString("speed");
+                String weatherDescription = weather.getString("description");
+
+                String address = jsonObj.getString("name") + ", " + sys.getString("country");
+
+                SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("address", address);
+                editor.commit();
+
+
+            } catch (JSONException e) {
+            }
+
+        }
+    }
+
 }

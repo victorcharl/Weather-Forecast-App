@@ -65,7 +65,7 @@
                 android:textSize="90sp" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/fellsLike"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Feels Like: -4°C" />

@@ -41,10 +41,6 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
 
         viewPageIndicator();
-
-
-
-
     }
 
     public void viewPageIndicator(){
@@ -60,5 +56,4 @@ public class MainActivity extends AppCompatActivity {
             viewPagerIndicator.addView(pagerIndicator[i]);
         }
     }
-
 }

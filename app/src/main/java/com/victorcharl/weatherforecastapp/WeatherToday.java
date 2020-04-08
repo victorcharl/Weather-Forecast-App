@@ -1,7 +1,5 @@
 package com.victorcharl.weatherforecastapp;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -28,7 +26,7 @@ public class WeatherToday extends Fragment {
 
     String currentLocation = "calgary";
 
-    TextView location, dateAndTime, temperature, feelsLike;
+    TextView location_txtVw, dateAndTime_txtVw, temperature_txtVw, feelsLike_txtVw, sunrise_txtVw, sunset_txtVw, status_txtVw;
 
 
     @Override
@@ -37,10 +35,13 @@ public class WeatherToday extends Fragment {
 
         //SharedPreferences preferences = this.getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
 
-        location = view.findViewById(R.id.location);
-        dateAndTime = view.findViewById(R.id.dataAndTime);
-        temperature = view.findViewById(R.id.temperature);
-        feelsLike = view.findViewById(R.id.fellsLike);
+        location_txtVw = view.findViewById(R.id.location);
+        dateAndTime_txtVw = view.findViewById(R.id.dataAndTime);
+        temperature_txtVw = view.findViewById(R.id.temperature);
+        feelsLike_txtVw = view.findViewById(R.id.fellsLike);
+        sunrise_txtVw = view.findViewById(R.id.sunrise);
+        sunset_txtVw = view.findViewById(R.id.sunset);
+        status_txtVw = view.findViewById(R.id.status);
 
         new getWeather().execute();
 
@@ -54,6 +55,7 @@ public class WeatherToday extends Fragment {
 
         }
 
+        //https://github.com/androdocs/Simple-HTTP-Request
         protected String doInBackground(String... args) {
             return HttpRequest.excuteGet("https://api.openweathermap.org/data/2.5/weather?q=" + currentLocation + "&units=metric&appid=" + API_KEY);
         }
@@ -84,7 +86,15 @@ public class WeatherToday extends Fragment {
 
                 String address = jsonObj.getString("name") + ", " + sys.getString("country");
 
-               location.setText(address);
+
+                location_txtVw.setText(address);
+                dateAndTime_txtVw.setText(updatedAtText);
+                status_txtVw.setText(weatherDescription);
+                temperature_txtVw.setText(temp);
+                feelsLike_txtVw.setText("Feels Like : " + tempFeelsLike);
+                sunrise_txtVw.setText(new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(new Date(sunrise * 1000)));
+                sunset_txtVw.setText(new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(new Date(sunset * 1000)));
+
 
 
             } catch (JSONException e) {

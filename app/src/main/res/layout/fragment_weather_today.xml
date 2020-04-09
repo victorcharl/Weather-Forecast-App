@@ -7,6 +7,21 @@
     android:background="@drawable/mainbg"
     tools:context=".WeatherToday">
 
+    <ProgressBar
+        android:id="@+id/loader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/txVw_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/error_message"
+        android:visibility="gone" />
+
     <RelativeLayout
         android:id="@+id/mainContainer"
         android:layout_width="match_parent"
@@ -25,7 +40,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="20dp"
-                android:text="Airdrie, AB"
                 android:textAllCaps="true"
                 android:textSize="30sp"
                 android:textStyle="bold" />
@@ -34,7 +48,6 @@
                 android:id="@+id/dataAndTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="07 March 2020, 20:08 PM"
                 android:textSize="16sp" />
         </LinearLayout>
 
@@ -53,8 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Clear Sky"
-                android:textSize="18dp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/temperature"
@@ -62,14 +74,13 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="sans-serif-thin"
-                android:text="2°C"
-                android:textSize="90sp" />
+                android:textSize="90sp"
+                tools:targetApi="jelly_bean" />
 
             <TextView
                 android:id="@+id/fellsLike"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Feels Like: -4°C" />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
@@ -92,29 +103,30 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/day1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Today"
-                    android:textSize="12dp" />
+                    android:textSize="12sp" />
 
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:tint="#FFFFFF" />
+                    android:tint="#FFFFFF"
+                    app:srcCompat="@android:drawable/ic_menu_report_image" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="2°C"
-                    android:textSize="12dp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="Mostly Sunny"
-                    android:textSize="14dp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -126,29 +138,30 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/day2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Today"
-                    android:textSize="12dp" />
+                    android:textSize="12sp" />
 
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:tint="#FFFFFF" />
+                    android:tint="#FFFFFF"
+                    app:srcCompat="@android:drawable/ic_menu_report_image" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="2°C"
-                    android:textSize="12dp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="Mostly Sunny"
-                    android:textSize="14dp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -160,29 +173,30 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/day3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Today"
-                    android:textSize="12dp" />
+                    android:textSize="12sp" />
 
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:tint="#FFFFFF" />
+                    android:tint="#FFFFFF"
+                    app:srcCompat="@android:drawable/ic_menu_report_image" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="2°C"
-                    android:textSize="12dp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="Mostly Sunny"
-                    android:textSize="14dp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -194,29 +208,30 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/day4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Today"
-                    android:textSize="12dp" />
+                    android:textSize="12sp" />
 
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:tint="#FFFFFF" />
+                    android:tint="#FFFFFF"
+                    app:srcCompat="@android:drawable/ic_menu_report_image" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="2°C"
-                    android:textSize="12dp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="Mostly Sunny"
-                    android:textSize="14dp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -228,29 +243,30 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/day5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Today"
-                    android:textSize="12dp" />
+                    android:textSize="12sp" />
 
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:tint="#FFFFFF" />
+                    android:tint="#FFFFFF"
+                    app:srcCompat="@android:drawable/ic_menu_report_image" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="2°C"
-                    android:textSize="12dp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="Mostly Sunny"
-                    android:textSize="14dp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -262,29 +278,30 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/day6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Today"
-                    android:textSize="12dp" />
+                    android:textSize="12sp" />
 
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:tint="#FFFFFF" />
+                    android:tint="#FFFFFF"
+                    app:srcCompat="@android:drawable/ic_menu_report_image" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="2°C"
-                    android:textSize="12dp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="Mostly Sunny"
-                    android:textSize="14dp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -296,15 +313,16 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/day7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Today"
-                    android:textSize="12dp" />
+                    android:textSize="12sp" />
 
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:tint="#FFFFFF" />
+                    android:tint="#FFFFFF"
+                    app:srcCompat="@android:drawable/ic_menu_report_image" />
 
                 <TextView
                     android:id="@+id/textView3"
@@ -312,14 +330,14 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="2°C"
-                    android:textSize="12dp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="Mostly Sunny"
-                    android:textSize="14dp" />
+                    android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -343,7 +361,8 @@
                     android:layout_weight="1"
                     android:background="#3CF1EBF1"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingTop="5dp">
 
                     <ImageView
                         android:layout_width="25dp"
@@ -375,7 +394,8 @@
                     android:layout_weight="1"
                     android:background="#3CF1EBF1"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingTop="5dp">
 
                     <ImageView
                         android:layout_width="25dp"
@@ -415,7 +435,8 @@
                     android:layout_weight="1"
                     android:background="#3CF1EBF1"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingTop="5dp">
 
                     <ImageView
                         android:layout_width="25dp"
@@ -434,6 +455,7 @@
                         android:textSize="12dp" />
 
                     <TextView
+                        android:id="@+id/wind"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="06:40 AM"
@@ -446,7 +468,8 @@
                     android:layout_weight="1"
                     android:background="#3CF1EBF1"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingTop="5dp">
 
                     <ImageView
                         android:layout_width="25dp"
@@ -465,6 +488,7 @@
                         android:textSize="12dp" />
 
                     <TextView
+                        android:id="@+id/visibility"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="06:40 AM"
@@ -485,7 +509,8 @@
                     android:layout_weight="1"
                     android:background="#3CF1EBF1"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingTop="5dp">
 
                     <ImageView
                         android:layout_width="25dp"
@@ -517,7 +542,8 @@
                     android:layout_weight="1"
                     android:background="#3CF1EBF1"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingTop="5dp">
 
                     <ImageView
                         android:layout_width="25dp"
@@ -546,4 +572,5 @@
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
+
 </RelativeLayout>

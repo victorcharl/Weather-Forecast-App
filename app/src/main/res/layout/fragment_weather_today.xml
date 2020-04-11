@@ -41,14 +41,18 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="20dp"
                 android:textAllCaps="true"
+                android:textColorHighlight="#FFFFFF"
                 android:textSize="30sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:fontFamily="@font/chelsea_market" />
 
             <TextView
                 android:id="@+id/dataAndTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp" />
+                android:textColorHighlight="#FFFFFF"
+                android:textSize="16sp"
+                app:fontFamily="@font/chelsea_market" />
         </LinearLayout>
 
 
@@ -66,7 +70,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textSize="18sp" />
+                android:textAllCaps="false"
+                android:textColorHighlight="#FFFFFF"
+                android:textSize="18sp"
+                app:fontFamily="@font/chelsea_market" />
 
             <TextView
                 android:id="@+id/temperature"
@@ -74,13 +81,17 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="sans-serif-thin"
+                android:textColorHighlight="#FFFFFF"
                 android:textSize="90sp"
+                app:fontFamily="@font/chelsea_market"
                 tools:targetApi="jelly_bean" />
 
             <TextView
                 android:id="@+id/fellsLike"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textColorHighlight="#FFFFFF"
+                app:fontFamily="@font/chelsea_market" />
 
         </LinearLayout>
 
@@ -89,6 +100,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@id/weather_details_container"
+            android:baselineAligned="false"
             android:orientation="horizontal"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
@@ -104,29 +116,55 @@
 
                 <TextView
                     android:id="@+id/day1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="12sp" />
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:tint="#FFFFFF"
-                    app:srcCompat="@android:drawable/ic_menu_report_image" />
-
-                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="2°C"
-                    android:textSize="12sp" />
+                    android:text="@string/today"
+                    android:textColorHighlight="#FFFFFF"
+                    android:textSize="16sp"
+                    app:fontFamily="@font/chelsea_market" />
+
+                <ImageView
+                    android:id="@+id/day1photo"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:contentDescription="@string/image_not_found"
+                    android:tint="#FFFFFF"
+                    app:srcCompat="@android:drawable/ic_menu_report_image" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/day1_temp_min"
+                        style="@android:style/Widget.TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textSize="18sp"
+                        app:fontFamily="@font/chelsea_market" />
+
+                    <TextView
+                        android:id="@+id/day1_temp_max"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        app:fontFamily="@font/chelsea_market" />
+                </LinearLayout>
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/day1status"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Mostly Sunny"
-                    android:textSize="14sp" />
+                    android:textColorHighlight="#FFFFFF"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/chelsea_market" />
             </LinearLayout>
 
             <LinearLayout
@@ -139,29 +177,52 @@
 
                 <TextView
                     android:id="@+id/day2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp" />
+                    android:gravity="center"
+                    android:textColorHighlight="#FFFFFF"
+                    android:textSize="16sp"
+                    app:fontFamily="@font/chelsea_market" />
 
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
+                    android:contentDescription="@string/image_not_found"
                     android:tint="#FFFFFF"
                     app:srcCompat="@android:drawable/ic_menu_report_image" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/day2_temp_min"
+                        style="@android:style/Widget.TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textSize="18sp"
+                        app:fontFamily="@font/chelsea_market" />
+
+                    <TextView
+                        android:id="@+id/day2_temp_max"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        app:fontFamily="@font/chelsea_market" />
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="2°C"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Mostly Sunny"
-                    android:textSize="14sp" />
+                    android:textColorHighlight="#FFFFFF"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/chelsea_market" />
             </LinearLayout>
 
             <LinearLayout
@@ -174,29 +235,52 @@
 
                 <TextView
                     android:id="@+id/day3"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp" />
+                    android:gravity="center"
+                    android:textColorHighlight="#FFFFFF"
+                    android:textSize="16sp"
+                    app:fontFamily="@font/chelsea_market" />
 
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
+                    android:contentDescription="@string/image_not_found"
                     android:tint="#FFFFFF"
                     app:srcCompat="@android:drawable/ic_menu_report_image" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/day3_temp_min"
+                        style="@android:style/Widget.TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textSize="18sp"
+                        app:fontFamily="@font/chelsea_market" />
+
+                    <TextView
+                        android:id="@+id/day3_temp_max"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        app:fontFamily="@font/chelsea_market" />
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="2°C"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Mostly Sunny"
-                    android:textSize="14sp" />
+                    android:textColorHighlight="#FFFFFF"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/chelsea_market" />
             </LinearLayout>
 
             <LinearLayout
@@ -209,29 +293,52 @@
 
                 <TextView
                     android:id="@+id/day4"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp" />
+                    android:gravity="center"
+                    android:textColorHighlight="#FFFFFF"
+                    android:textSize="16sp"
+                    app:fontFamily="@font/chelsea_market" />
 
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
+                    android:contentDescription="@string/image_not_found"
                     android:tint="#FFFFFF"
                     app:srcCompat="@android:drawable/ic_menu_report_image" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/day4_temp_min"
+                        style="@android:style/Widget.TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textSize="18sp"
+                        app:fontFamily="@font/chelsea_market" />
+
+                    <TextView
+                        android:id="@+id/day4_temp_max"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        app:fontFamily="@font/chelsea_market" />
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="2°C"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Mostly Sunny"
-                    android:textSize="14sp" />
+                    android:textColorHighlight="#FFFFFF"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/chelsea_market" />
             </LinearLayout>
 
             <LinearLayout
@@ -244,29 +351,52 @@
 
                 <TextView
                     android:id="@+id/day5"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp" />
+                    android:gravity="center"
+                    android:textColorHighlight="#FFFFFF"
+                    android:textSize="16sp"
+                    app:fontFamily="@font/chelsea_market" />
 
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
+                    android:contentDescription="@string/image_not_found"
                     android:tint="#FFFFFF"
                     app:srcCompat="@android:drawable/ic_menu_report_image" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/day5_temp_min"
+                        style="@android:style/Widget.TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textSize="18sp"
+                        app:fontFamily="@font/chelsea_market" />
+
+                    <TextView
+                        android:id="@+id/day5_temp_max"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        app:fontFamily="@font/chelsea_market" />
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="2°C"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Mostly Sunny"
-                    android:textSize="14sp" />
+                    android:textColorHighlight="#FFFFFF"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/chelsea_market" />
             </LinearLayout>
 
             <LinearLayout
@@ -279,29 +409,52 @@
 
                 <TextView
                     android:id="@+id/day6"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp" />
+                    android:gravity="center"
+                    android:textColorHighlight="#FFFFFF"
+                    android:textSize="16sp"
+                    app:fontFamily="@font/chelsea_market" />
 
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
+                    android:contentDescription="@string/image_not_found"
                     android:tint="#FFFFFF"
                     app:srcCompat="@android:drawable/ic_menu_report_image" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/day6_temp_min"
+                        style="@android:style/Widget.TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textSize="18sp"
+                        app:fontFamily="@font/chelsea_market" />
+
+                    <TextView
+                        android:id="@+id/day6_temp_max"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        app:fontFamily="@font/chelsea_market" />
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="2°C"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Mostly Sunny"
-                    android:textSize="14sp" />
+                    android:textColorHighlight="#FFFFFF"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/chelsea_market" />
             </LinearLayout>
 
             <LinearLayout
@@ -314,30 +467,52 @@
 
                 <TextView
                     android:id="@+id/day7"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp" />
+                    android:gravity="center"
+                    android:textColorHighlight="#FFFFFF"
+                    android:textSize="16sp"
+                    app:fontFamily="@font/chelsea_market" />
 
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
+                    android:contentDescription="@string/image_not_found"
                     android:tint="#FFFFFF"
                     app:srcCompat="@android:drawable/ic_menu_report_image" />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/day7_temp_min"
+                        style="@android:style/Widget.TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textSize="18sp"
+                        app:fontFamily="@font/chelsea_market" />
+
+                    <TextView
+                        android:id="@+id/day7_temp_max"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        app:fontFamily="@font/chelsea_market" />
+                </LinearLayout>
+
                 <TextView
-                    android:id="@+id/textView3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="2°C"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Mostly Sunny"
-                    android:textSize="14sp" />
+                    android:textColorHighlight="#FFFFFF"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/chelsea_market" />
             </LinearLayout>
         </LinearLayout>
 
@@ -353,7 +528,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:weightSum="2">
+                android:weightSum="2"
+                android:baselineAligned="false">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -368,7 +544,8 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:tint="#FFFFFF"
-                        app:srcCompat="@drawable/sunrise" />
+                        app:srcCompat="@drawable/sunrise"
+                        android:contentDescription="@string/image_not_found" />
 
                     <Space
                         android:layout_width="wrap_content"
@@ -377,15 +554,18 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Sunrise"
-                        android:textSize="12dp" />
+                        android:text="@string/sunrise"
+                        android:textColorHighlight="#FFFFFF"
+                        android:textSize="16sp"
+                        app:fontFamily="@font/chelsea_market" />
 
                     <TextView
                         android:id="@+id/sunrise"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="06:40 AM"
-                        android:textSize="14dp" />
+                        android:textColorHighlight="#FFFFFF"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/chelsea_market" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -401,7 +581,8 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:tint="#FFFFFF"
-                        app:srcCompat="@drawable/sunset" />
+                        app:srcCompat="@drawable/sunset"
+                        android:contentDescription="@string/image_not_found" />
 
                     <Space
                         android:layout_width="wrap_content"
@@ -410,15 +591,18 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Sunset"
-                        android:textSize="12dp" />
+                        android:text="@string/sunset"
+                        android:textColorHighlight="#FFFFFF"
+                        android:textSize="16sp"
+                        app:fontFamily="@font/chelsea_market" />
 
                     <TextView
                         android:id="@+id/sunset"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="06:40 AM"
-                        android:textSize="14dp" />
+                        android:textColorHighlight="#FFFFFF"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/chelsea_market" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -427,7 +611,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="2">
+                android:weightSum="2"
+                android:baselineAligned="false">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -442,7 +627,8 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:tint="#FFFFFF"
-                        app:srcCompat="@drawable/wind" />
+                        app:srcCompat="@drawable/wind"
+                        android:contentDescription="@string/image_not_found" />
 
                     <Space
                         android:layout_width="wrap_content"
@@ -451,15 +637,18 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Wind"
-                        android:textSize="12dp" />
+                        android:text="@string/wind"
+                        android:textColorHighlight="#FFFFFF"
+                        android:textSize="16sp"
+                        app:fontFamily="@font/chelsea_market" />
 
                     <TextView
                         android:id="@+id/wind"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="06:40 AM"
-                        android:textSize="14dp" />
+                        android:textColorHighlight="#FFFFFF"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/chelsea_market" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -469,13 +658,15 @@
                     android:background="#3CF1EBF1"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:paddingTop="5dp">
+                    android:paddingTop="5dp"
+                    tools:ignore="TooManyViews">
 
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:tint="#FFFFFF"
-                        app:srcCompat="@drawable/visibility" />
+                        app:srcCompat="@drawable/visibility"
+                        android:contentDescription="@string/image_not_found" />
 
                     <Space
                         android:layout_width="wrap_content"
@@ -484,15 +675,18 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Visibility"
-                        android:textSize="12dp" />
+                        android:text="@string/visibility"
+                        android:textColorHighlight="#FFFFFF"
+                        android:textSize="16sp"
+                        app:fontFamily="@font/chelsea_market" />
 
                     <TextView
                         android:id="@+id/visibility"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="06:40 AM"
-                        android:textSize="14dp" />
+                        android:textColorHighlight="#FFFFFF"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/chelsea_market" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -501,7 +695,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="2">
+                android:weightSum="2"
+                android:baselineAligned="false">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -516,7 +711,8 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:tint="#FFFFFF"
-                        app:srcCompat="@drawable/pressure" />
+                        app:srcCompat="@drawable/pressure"
+                        android:contentDescription="@string/image_not_found" />
 
                     <Space
                         android:layout_width="wrap_content"
@@ -525,15 +721,18 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Pressure"
-                        android:textSize="12dp" />
+                        android:text="@string/pressure"
+                        android:textColorHighlight="#FFFFFF"
+                        android:textSize="16sp"
+                        app:fontFamily="@font/chelsea_market" />
 
                     <TextView
                         android:id="@+id/pressure"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="06:40 AM"
-                        android:textSize="14dp" />
+                        android:textColorHighlight="#FFFFFF"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/chelsea_market" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -549,7 +748,8 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:tint="#FFFFFF"
-                        app:srcCompat="@drawable/humidity" />
+                        app:srcCompat="@drawable/humidity"
+                        android:contentDescription="@string/image_not_found"/>
 
                     <Space
                         android:layout_width="wrap_content"
@@ -558,19 +758,24 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Humidity"
-                        android:textSize="12dp" />
+                        android:text="@string/humidity"
+                        android:textColorHighlight="#FFFFFF"
+                        android:textSize="16sp"
+                        app:fontFamily="@font/chelsea_market" />
 
                     <TextView
                         android:id="@+id/humidity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="06:40 AM"
-                        android:textSize="14dp" />
+                        android:textColorHighlight="#FFFFFF"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/chelsea_market" />
                 </LinearLayout>
 
             </LinearLayout>
+
         </LinearLayout>
+
     </RelativeLayout>
 
 </RelativeLayout>

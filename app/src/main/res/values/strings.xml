@@ -1,14 +1,16 @@
 <resources>
     <string name="app_name">WeatherForecastApp</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="firstFragmentText">Today\'s Weather</string>
-    <string name="secondFragmentText">Search Weather</string>
-    <string name="thirdFragmentText">Set Notification</string>
-
-    <string name="tab_label1">Today\'s Weather</string>
-    <string name="tab_label2">Search Weather</string>
-    <string name="tab_label3">Set Notification</string>
     <string name="loading">"Loading. . . "</string>
-    <string name="error_message">Something went wrong!</string>
+
+    <string name="error_message">Location not found!</string>
+    <string name="image_not_found">Image not found.</string>
+    <string name="today">Today</string>
+    <string name="sunrise">Sunrise</string>
+    <string name="sunset">Sunset</string>
+    <string name="wind">Wind</string>
+    <string name="humidity">Humidity</string>
+    <string name="visibility">Visibility</string>
+    <string name="pressure">Pressure</string>
+
 </resources>

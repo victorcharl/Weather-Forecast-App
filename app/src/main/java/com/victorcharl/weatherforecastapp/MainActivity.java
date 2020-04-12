@@ -23,8 +23,6 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-
-
     LinearLayout viewPagerIndicator;
     TextView[] pagerIndicator;
 

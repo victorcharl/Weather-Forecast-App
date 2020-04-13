@@ -1,10 +1,14 @@
 package com.victorcharl.weatherforecastapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.Dialog;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        viewPagerIndicator = (LinearLayout)findViewById(R.id.viewPageIndicator);
+        viewPagerIndicator = (LinearLayout) findViewById(R.id.viewPageIndicator);
 
         final androidx.viewpager.widget.ViewPager viewPager = findViewById(R.id.pager);
         final PagerAdapter adapter = new PagerAdapter

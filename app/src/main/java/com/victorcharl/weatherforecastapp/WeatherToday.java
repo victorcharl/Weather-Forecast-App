@@ -182,7 +182,7 @@ public class WeatherToday extends Fragment {
                 String address = jsonObj.getString("name") + ", " + sys.getString("country");
 
                 /*Getting value from JSON object in "main" object*/
-                String updateTime = new SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.ENGLISH).format(new Date(jsonObj.getLong("dt") * 1000));
+                String updateTime = new SimpleDateFormat("MMM/dd/yyyy hh:mm a", Locale.ENGLISH).format(new Date(jsonObj.getLong("dt") * 1000));
                 String temp = main.getString("temp");
                 String tempFeelsLike = main.getString("feels_like");
                 String tempMin = main.getString("temp_min");
@@ -238,7 +238,7 @@ public class WeatherToday extends Fragment {
 
         //https://github.com/androdocs/Simple-HTTP-Request
         protected String doInBackground(String... args) {
-            return HttpRequest.excuteGet("https://api.openweathermap.org/data/2.5/forecast?q=airdrie,ca&appid=bd154dbe4caf8a49b5926c34fcfa6dcd&units=metric");
+            return HttpRequest.excuteGet("https://api.openweathermap.org/data/2.5/forecast?q=" + currentLocation + "&appid=" + API_KEY + "&units=metric");
         }
 
         @SuppressLint("SetTextI18n")
@@ -302,9 +302,7 @@ public class WeatherToday extends Fragment {
 
         /*https://stackoverflow.com/questions/6407324/how-to-display-image-from-url-on-android*/
         for (int i = 0; i < photoStat.length; i++){
-            Picasso.with(getContext())
-                    .load(temp_icon_stat.get(i))
-                    .into(photoStat[i]);
+            Picasso.get().load(temp_icon_stat.get(i)).into(photoStat[i]);
         }
     }
 

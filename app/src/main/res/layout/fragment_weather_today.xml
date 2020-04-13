@@ -132,8 +132,8 @@
 
                 <ImageView
                     android:id="@+id/day1photo"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
                     android:contentDescription="@string/image_not_found"
                     android:scaleType="fitXY"
                     android:tint="#FFFFFF"
@@ -163,7 +163,7 @@
                         android:layout_gravity="bottom|start"
                         android:layout_weight="1"
                         android:textColor="@android:color/white"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         app:fontFamily="@font/chelsea_market" />
 
                 </LinearLayout>
@@ -199,9 +199,10 @@
 
                 <ImageView
                     android:id="@+id/day2photo"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
                     android:contentDescription="@string/image_not_found"
+                    android:scaleType="fitXY"
                     android:tint="#FFFFFF"
                     app:srcCompat="@android:drawable/ic_menu_report_image" />
 
@@ -229,7 +230,7 @@
                         android:layout_gravity="bottom|start"
                         android:layout_weight="1"
                         android:textColor="@android:color/white"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         app:fontFamily="@font/chelsea_market" />
 
                 </LinearLayout>
@@ -265,9 +266,10 @@
 
                 <ImageView
                     android:id="@+id/day3photo"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
                     android:contentDescription="@string/image_not_found"
+                    android:scaleType="fitXY"
                     android:tint="#FFFFFF"
                     app:srcCompat="@android:drawable/ic_menu_report_image" />
 
@@ -295,7 +297,7 @@
                         android:layout_gravity="bottom|start"
                         android:layout_weight="1"
                         android:textColor="@android:color/white"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         app:fontFamily="@font/chelsea_market" />
 
                 </LinearLayout>
@@ -331,9 +333,10 @@
 
                 <ImageView
                     android:id="@+id/day4photo"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
                     android:contentDescription="@string/image_not_found"
+                    android:scaleType="fitXY"
                     android:tint="#FFFFFF"
                     app:srcCompat="@android:drawable/ic_menu_report_image" />
 
@@ -361,7 +364,7 @@
                         android:layout_gravity="bottom|start"
                         android:layout_weight="1"
                         android:textColor="@android:color/white"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         app:fontFamily="@font/chelsea_market" />
 
                 </LinearLayout>
@@ -397,9 +400,10 @@
 
                 <ImageView
                     android:id="@+id/day5photo"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
                     android:contentDescription="@string/image_not_found"
+                    android:scaleType="fitXY"
                     android:tint="#FFFFFF"
                     app:srcCompat="@android:drawable/ic_menu_report_image" />
 
@@ -427,7 +431,7 @@
                         android:layout_gravity="bottom|start"
                         android:layout_weight="1"
                         android:textColor="@android:color/white"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         app:fontFamily="@font/chelsea_market" />
 
                 </LinearLayout>

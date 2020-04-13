@@ -135,6 +135,7 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:contentDescription="@string/image_not_found"
+                    android:scaleType="fitXY"
                     android:tint="#FFFFFF"
                     app:srcCompat="@android:drawable/ic_menu_report_image" />
 
@@ -197,6 +198,7 @@
                     app:fontFamily="@font/chelsea_market" />
 
                 <ImageView
+                    android:id="@+id/day2photo"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:contentDescription="@string/image_not_found"
@@ -262,6 +264,7 @@
                     app:fontFamily="@font/chelsea_market" />
 
                 <ImageView
+                    android:id="@+id/day3photo"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:contentDescription="@string/image_not_found"
@@ -327,6 +330,7 @@
                     app:fontFamily="@font/chelsea_market" />
 
                 <ImageView
+                    android:id="@+id/day4photo"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:contentDescription="@string/image_not_found"
@@ -392,6 +396,7 @@
                     app:fontFamily="@font/chelsea_market" />
 
                 <ImageView
+                    android:id="@+id/day5photo"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:contentDescription="@string/image_not_found"

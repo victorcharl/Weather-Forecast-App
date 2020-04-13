@@ -1,12 +1,14 @@
 package com.victorcharl.weatherforecastapp;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
+import android.graphics.Bitmap;
+import android.net.IpSecManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 
 import com.androdocs.httprequest.HttpRequest;
+import com.squareup.picasso.Picasso;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
@@ -16,7 +18,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,17 +25,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
 
 public class WeatherToday extends Fragment {
 
     private static final String API_KEY = "bd154dbe4caf8a49b5926c34fcfa6dcd";
     private static final String currentLocation = "Airdrie, Ca";
+
+    private static final String iconLocation = "https://openweathermap.org/img/wn/";
 
     /*TODO
     *  get latitude and longitude*/
@@ -71,9 +74,11 @@ public class WeatherToday extends Fragment {
     private TextView day5max;
     private TextView day5status;
 
-    ImageView day1photo;
+    private ImageView day1photo, day2photo, day3photo, day4photo, day5photo;
 
     private RelativeLayout relativeLayout;
+
+    private ArrayList<String> temp_icon_stat;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -105,18 +110,22 @@ public class WeatherToday extends Fragment {
         day1max = view.findViewById(R.id.day1_temp_max);
         day1status = view.findViewById(R.id.day1status);
         TextView day2 = view.findViewById(R.id.day2);
+        day2photo = view.findViewById(R.id.day2photo);
         day2min = view.findViewById(R.id.day2_temp_min);
         day2max = view.findViewById(R.id.day2_temp_max);
         day2status = view.findViewById(R.id.day2status);
         TextView day3 = view.findViewById(R.id.day3);
+        day3photo = view.findViewById(R.id.day3photo);
         day3min = view.findViewById(R.id.day3_temp_min);
         day3max = view.findViewById(R.id.day3_temp_max);
         day3status = view.findViewById(R.id.day3status);
         TextView day4 = view.findViewById(R.id.day4);
+        day4photo = view.findViewById(R.id.day4photo);
         day4min = view.findViewById(R.id.day4_temp_min);
         day4max = view.findViewById(R.id.day4_temp_max);
         day4status = view.findViewById(R.id.day4status);
         TextView day5 = view.findViewById(R.id.day5);
+        day5photo = view.findViewById(R.id.day5photo);
         day5min = view.findViewById(R.id.day5_temp_min);
         day5max = view.findViewById(R.id.day5_temp_max);
         day5status = view.findViewById(R.id.day5status);
@@ -191,6 +200,7 @@ public class WeatherToday extends Fragment {
                 /*Getting value from JSON object in "weather" object*/
                 String weatherMain = weather.getString("main");
                 String weatherDescription = weather.getString("description");
+                String weatherIcon = weather.getString("icon");
 
                 relativeLayout.setVisibility(View.VISIBLE);
                 loader.setVisibility(View.GONE);
@@ -208,12 +218,6 @@ public class WeatherToday extends Fragment {
                 visibility__txtVw.setText(String.valueOf(visibility).substring(0,4) + " km");
                 wind_txtVw.setText(windSpeed + " km/hr");
 
-                /*Populating weekly weather*/
-                day1status.setText(weatherMain);
-                day1min.setText(roundingOff(tempMin) + "°");
-                day1max.setText(roundingOff(tempMax) + "°");
-
-
             } catch (JSONException e) {
                 relativeLayout.setVisibility(View.GONE);
                 loader.setVisibility(View.GONE);
@@ -226,6 +230,9 @@ public class WeatherToday extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+
+            relativeLayout.setVisibility(View.GONE);
+            loader.setVisibility(View.VISIBLE);
 
         }
 
@@ -240,9 +247,13 @@ public class WeatherToday extends Fragment {
 
             try {
 
+                relativeLayout.setVisibility(View.VISIBLE);
+                loader.setVisibility(View.GONE);
+
                 ArrayList<String> temp_min = new ArrayList<>();
                 ArrayList<String> temp_max = new ArrayList<>();
                 ArrayList<String> temp_stat = new ArrayList<>();
+                temp_icon_stat = new ArrayList<>();
 
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray fiveDaysWeatherInformation = jsonObject.getJSONArray("list");
@@ -253,33 +264,48 @@ public class WeatherToday extends Fragment {
                     JSONArray weather = myList.getJSONArray("weather");
                     JSONObject stat = weather.getJSONObject(0);
 
-
-                    Log.d("mylist", String.valueOf(stat));
-
                     temp_min.add(main.getString("temp_min"));
                     temp_max.add(main.getString("temp_max"));
                     temp_stat.add(stat.getString("main"));
+                    temp_icon_stat.add(iconLocation + stat.getString("icon")+ "@2x.png");
+
                 }
 
-                TextView[] TV_temp_min = new TextView[]{day2min, day3min, day4min, day5min};
-                TextView[] TV_temp_max = new TextView[]{day2max, day3max, day4max, day5max};
-                TextView[] TV_temp_stat = new TextView[]{day2status, day3status, day4status, day5status};
+                TextView[] TV_temp_min = new TextView[]{day1min, day2min, day3min, day4min, day5min};
+                TextView[] TV_temp_max = new TextView[]{day1max, day2max, day3max, day4max, day5max};
+                TextView[] TV_temp_stat = new TextView[]{day1status, day2status, day3status, day4status, day5status};
+
                 for(int j = 0;  j < TV_temp_max.length; j++) {
                     TV_temp_min[j].setText(roundingOff(temp_min.get(j)) + "°");
                     TV_temp_max[j].setText(roundingOff(temp_max.get(j)) + "°");
                     TV_temp_stat[j].setText(temp_stat.get(j));
                 }
 
+                displayImage();
+
             } catch (JSONException e) {
                 relativeLayout.setVisibility(View.GONE);
                 loader.setVisibility(View.GONE);
                 errorMessage.setVisibility(View.VISIBLE);
             }
+
         }
     }
 
     private int roundingOff(String value){
         return (int)Math.round(Double.parseDouble(value));
+    }
+
+    private void displayImage(){
+
+        ImageView[] photoStat = new ImageView[]{day1photo, day2photo, day3photo, day4photo, day5photo};
+
+        /*https://stackoverflow.com/questions/6407324/how-to-display-image-from-url-on-android*/
+        for (int i = 0; i < photoStat.length; i++){
+            Picasso.with(getContext())
+                    .load(temp_icon_stat.get(i))
+                    .into(photoStat[i]);
+        }
     }
 
 }

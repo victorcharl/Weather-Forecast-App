@@ -10,7 +10,7 @@
     <string name="sunset">Sunset</string>
     <string name="wind">Wind</string>
     <string name="humidity">Humidity</string>
-    <string name="visibility">Visibility</string>
-    <string name="pressure">Pressure</string>
+    <string name="airPressure">Air Pressure</string>
+    <string name="groundPressure">Ground Pressure</string>
 
 </resources>

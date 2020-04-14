@@ -1,19 +1,11 @@
 package com.victorcharl.weatherforecastapp;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.ActivityManager;
-import android.app.Dialog;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.Iterator;
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -38,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
             page = bundle.getInt("page");
         }
         viewPager.setCurrentItem(page);
-        isAppRunning();
 
         viewPageIndicator();
     }
@@ -54,23 +45,5 @@ public class MainActivity extends AppCompatActivity {
 
             viewPagerIndicator.addView(pagerIndicator[i]);
         }
-    }
-
-    private boolean isAppRunning() {
-        ActivityManager m = (ActivityManager) this.getSystemService( ACTIVITY_SERVICE );
-        List<ActivityManager.RunningTaskInfo> runningTaskInfoList =  m.getRunningTasks(10);
-        Iterator<ActivityManager.RunningTaskInfo> itr = runningTaskInfoList.iterator();
-        int n=0;
-        while(itr.hasNext()){
-            n++;
-            itr.next();
-        }
-        if(n==1){
-            SharedPreferences myPrefs = getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
-            myPrefs.edit().clear().commit();// App is killed
-            return false;
-        }
-
-        return true; // App is in background or foreground
     }
 }

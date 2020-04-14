@@ -26,14 +26,20 @@
         android:id="@+id/mainContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        android:visibility="visible"
+        >
 
         <LinearLayout
             android:id="@+id/address_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="220dp"
+            android:layout_marginTop="90dp"
+            android:layout_marginRight="220dp"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:translationZ="90dp"
+            tools:ignore="UnusedAttribute">
 
             <TextView
                 android:id="@+id/location"
@@ -42,7 +48,7 @@
                 android:gravity="center"
                 android:paddingTop="20dp"
                 android:textAllCaps="true"
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/tab_indicator_text"
                 android:textColorHighlight="#FFFFFF"
                 android:textSize="30sp"
                 android:textStyle="bold"
@@ -52,7 +58,7 @@
                 android:id="@+id/dataAndTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/tab_indicator_text"
                 android:textColorHighlight="#FFFFFF"
                 android:textSize="16sp"
                 app:fontFamily="@font/chelsea_market" />
@@ -62,10 +68,11 @@
         <LinearLayout
             android:id="@+id/temperature_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/weekly_weather_container"
+            android:layout_height="match_parent"
             android:layout_below="@+id/address_container"
-            android:gravity="center"
+            android:layout_marginLeft="220dp"
+            android:layout_marginRight="220dp"
+            android:baselineAligned="true"
             android:orientation="vertical">
 
             <TextView
@@ -74,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textAllCaps="false"
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/tab_indicator_text"
                 android:textColorHighlight="#FFFFFF"
                 android:textSize="18sp"
                 app:fontFamily="@font/chelsea_market" />
@@ -85,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="sans-serif-thin"
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/tab_indicator_text"
                 android:textColorHighlight="#FFFFFF"
                 android:textSize="90sp"
                 app:fontFamily="@font/chelsea_market"
@@ -95,7 +102,8 @@
                 android:id="@+id/fellsLike"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
+                android:layout_gravity="center"
+                android:textColor="@android:color/tab_indicator_text"
                 android:textColorHighlight="#FFFFFF"
                 app:fontFamily="@font/chelsea_market" />
 

@@ -3,7 +3,6 @@ package com.victorcharl.weatherforecastapp;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,8 +13,6 @@ import com.squareup.picasso.Picasso;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +20,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,9 +54,9 @@ public class WeatherToday extends Fragment {
     private TextView sunset_txtVw;
     private TextView status_txtVw;
     private TextView wind_txtVw;
-    private TextView humidity__txtVw;
-    private TextView visibility__txtVw;
-    private TextView pressure_txtVw;
+    private TextView humidity_txtVw;
+    private TextView apressure_txtVw;
+    private TextView gpressure_txtVw;
 
     private TextView errorMessage;
 
@@ -97,10 +93,6 @@ public class WeatherToday extends Fragment {
         locationLatitude = myPrefs.getString(LATITUDE_KEY, "51.080809");
         locationLongitude = myPrefs.getString(LONGITUDE_KEY, "-114.090608");
 
-        getWeatherForecastLocation = API_URL + "weather?" + "lat="+locationLatitude+ "&lon=" +locationLongitude+ "&units=metric&appid=" + API_KEY;
-        Log.d("tag", getWeatherForecastLocation+ "\n" + API_URL + "forecast?" + "lat="+locationLatitude+ "&lon=" +locationLongitude+ "&units=metric&appid=" + API_KEY);
-
-
         relativeLayout = view.findViewById(R.id.mainContainer);
 
         errorMessage = view.findViewById(R.id.txVw_error);
@@ -114,10 +106,10 @@ public class WeatherToday extends Fragment {
         sunrise_txtVw = view.findViewById(R.id.sunrise);
         sunset_txtVw = view.findViewById(R.id.sunset);
         status_txtVw = view.findViewById(R.id.status);
-        humidity__txtVw = view.findViewById(R.id.humidity);
+        humidity_txtVw = view.findViewById(R.id.humidity);
         wind_txtVw = view.findViewById(R.id.wind);
-        visibility__txtVw = view.findViewById(R.id.visibility);
-        pressure_txtVw = view.findViewById(R.id.pressure);
+        gpressure_txtVw = view.findViewById(R.id.gPressure);
+        apressure_txtVw = view.findViewById(R.id.aPressure);
 
         /*WEEKLY WEATHER DETAILS*/
         TextView day1 = view.findViewById(R.id.day1);
@@ -159,8 +151,8 @@ public class WeatherToday extends Fragment {
             }
         }
 
-        new getCurrentWeather().execute();
-        new getFourDayWeather().execute();
+        //new getCurrentWeather().execute();
+        new getWeatherData().execute();
 
         return view;
     }
@@ -183,7 +175,7 @@ public class WeatherToday extends Fragment {
         @SuppressLint("SetTextI18n")
         @Override
         protected void onPostExecute(String result) {
-            /*https://abhiandroid.com/programming/json*/
+
             try {
                 /*get JSONObject from JSON file*/
                 JSONObject jsonObj = new JSONObject(result);
@@ -225,9 +217,9 @@ public class WeatherToday extends Fragment {
                 feelsLike_txtVw.setText("Feels Like : " + roundingOff(tempFeelsLike)  + "°C");
                 sunrise_txtVw.setText(new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(new Date(sunrise * 1000)));
                 sunset_txtVw.setText(new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(new Date(sunset * 1000)));
-                pressure_txtVw.setText(pressure + " hPa");
-                humidity__txtVw.setText(humidity + " %");
-                visibility__txtVw.setText(String.valueOf(visibility).substring(0,4) + " km");
+                apressure_txtVw.setText(pressure + " hPa");
+                humidity_txtVw.setText(humidity + " %");
+                gpressure_txtVw.setText(String.valueOf(visibility).substring(0,4) + " km");
                 wind_txtVw.setText(windSpeed + " km/hr");
 
             } catch (JSONException e) {
@@ -238,7 +230,7 @@ public class WeatherToday extends Fragment {
         }
     }
 
-    class getFourDayWeather extends AsyncTask<String, Void, String>{
+    class getWeatherData extends AsyncTask<String, Void, String>{
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -256,8 +248,9 @@ public class WeatherToday extends Fragment {
         @SuppressLint("SetTextI18n")
         @Override
         protected void onPostExecute(String result) {
-
             try {
+
+                /*You can search weather forecast for 5 days with data every 3 hours by geographic coordinates*/
 
                 relativeLayout.setVisibility(View.VISIBLE);
                 loader.setVisibility(View.GONE);
@@ -267,10 +260,14 @@ public class WeatherToday extends Fragment {
                 ArrayList<String> temp_stat = new ArrayList<>();
                 temp_icon_stat = new ArrayList<>();
 
+
+                /*get JSONObject from JSON file*/
                 JSONObject jsonObject = new JSONObject(result);
-                JSONArray fiveDaysWeatherInformation = jsonObject.getJSONArray("list");
-                for(int i = 0; i < fiveDaysWeatherInformation.length(); i+=8 ) {
-                    JSONObject myList = fiveDaysWeatherInformation.getJSONObject(i);
+                JSONArray list = jsonObject.getJSONArray("list");
+
+                /*fetching data for 5 days*/
+                for(int i = 0; i < list.length(); i+=8 ) {
+                    JSONObject myList = list.getJSONObject(i);
                     JSONObject main = myList.getJSONObject("main");
 
                     JSONArray weather = myList.getJSONArray("weather");
@@ -281,8 +278,42 @@ public class WeatherToday extends Fragment {
                     temp_stat.add(stat.getString("main"));
                     temp_icon_stat.add(iconLocation + stat.getString("icon")+ "@2x.png");
 
+                    /*fetching data for today's weather*/
+                    if(i == 0 ){
+                        JSONObject city = jsonObject.getJSONObject("city");
+                        JSONObject wind = myList.getJSONObject("wind");
+
+                        /*fetching data and putting it in variable*/
+                        String address = city.getString("name") + ", " + city.getString("country");
+                        String updateTime = new SimpleDateFormat("MMM/dd/yyyy hh:mm a", Locale.ENGLISH).format(new Date(myList.getLong("dt") * 1000));
+                        String weatherDescription = stat.getString("description");
+                        String temp = main.getString("temp");
+                        String tempFeelsLike = main.getString("feels_like");
+                        long sunrise = city.getLong("sunrise");
+                        long sunset = city.getLong("sunset");
+                        String windSpeed = wind.getString("speed");
+                        String apressure = main.getString("sea_level");
+                        String gpressure = main.getString("grnd_level");
+                        String humidity = main.getString("humidity");
+
+                        /*populating today's weather and it's details*/
+                        location_txtVw.setText(address); //address
+                        dateAndTime_txtVw.setText("Updated at: " + updateTime);
+                        status_txtVw.setText(weatherDescription.substring(0, 1).toUpperCase() + weatherDescription.substring(1).toLowerCase());
+                        temperature_txtVw.setText(roundingOff(temp) + "°C");
+                        feelsLike_txtVw.setText("Feels Like : " + roundingOff(tempFeelsLike)  + "°C");
+                        sunrise_txtVw.setText(new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(new Date(sunrise * 1000)));
+                        sunset_txtVw.setText(new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(new Date(sunset * 1000)));
+                        wind_txtVw.setText(windSpeed + " km/hr");
+                        humidity_txtVw.setText(humidity + " %");
+                        apressure_txtVw.setText(apressure + " hPa");
+                        gpressure_txtVw.setText(gpressure + " hPa");
+
+                    }
+
                 }
 
+                /*Populating 5 days weather section*/
                 TextView[] TV_temp_min = new TextView[]{day1min, day2min, day3min, day4min, day5min};
                 TextView[] TV_temp_max = new TextView[]{day1max, day2max, day3max, day4max, day5max};
                 TextView[] TV_temp_stat = new TextView[]{day1status, day2status, day3status, day4status, day5status};

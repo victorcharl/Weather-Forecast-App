@@ -1,8 +1,9 @@
 package com.victorcharl.weatherforecastapp;
 
 import android.annotation.SuppressLint;
-import android.graphics.Bitmap;
-import android.net.IpSecManager;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import com.squareup.picasso.Picasso;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +23,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,17 +34,21 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.concurrent.ExecutionException;
 
 public class WeatherToday extends Fragment {
 
+    private static final String API_URL = "https://api.openweathermap.org/data/2.5/";
     private static final String API_KEY = "bd154dbe4caf8a49b5926c34fcfa6dcd";
-    private static final String currentLocation = "Airdrie, Ca";
+
+    private static String LATITUDE_KEY = "latitude";
+    private static String LONGITUDE_KEY = "longitude";
+
+    private String getWeatherForecastLocation;
 
     private static final String iconLocation = "https://openweathermap.org/img/wn/";
 
-    /*TODO
-    *  get latitude and longitude*/
+    private String locationLatitude;
+    private String locationLongitude;
 
     private TextView location_txtVw;
     private TextView dateAndTime_txtVw;
@@ -84,6 +92,14 @@ public class WeatherToday extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,  Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_weather_today, container, false);
+
+        SharedPreferences myPrefs = getActivity().getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
+        locationLatitude = myPrefs.getString(LATITUDE_KEY, "51.080809");
+        locationLongitude = myPrefs.getString(LONGITUDE_KEY, "-114.090608");
+
+        getWeatherForecastLocation = API_URL + "weather?" + "lat="+locationLatitude+ "&lon=" +locationLongitude+ "&units=metric&appid=" + API_KEY;
+        Log.d("tag", getWeatherForecastLocation+ "\n" + API_URL + "forecast?" + "lat="+locationLatitude+ "&lon=" +locationLongitude+ "&units=metric&appid=" + API_KEY);
+
 
         relativeLayout = view.findViewById(R.id.mainContainer);
 
@@ -143,14 +159,14 @@ public class WeatherToday extends Fragment {
             }
         }
 
-        new getTodayWeather().execute();
+        new getCurrentWeather().execute();
         new getFourDayWeather().execute();
 
         return view;
     }
 
     @SuppressLint("StaticFieldLeak")
-    class getTodayWeather extends AsyncTask<String, Void, String>{
+    class getCurrentWeather extends AsyncTask<String, Void, String>{
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -161,7 +177,7 @@ public class WeatherToday extends Fragment {
 
         /*https://github.com/androdocs/Simple-HTTP-Request*/
         protected String doInBackground(String... args) {
-            return HttpRequest.excuteGet("https://api.openweathermap.org/data/2.5/weather?q=" + currentLocation + "&units=metric&appid=" + API_KEY);
+            return HttpRequest.excuteGet( API_URL + "weather?lat="+locationLatitude+ "&lon=" +locationLongitude+ "&units=metric&appid=" + API_KEY);
         }
 
         @SuppressLint("SetTextI18n")
@@ -185,8 +201,6 @@ public class WeatherToday extends Fragment {
                 String updateTime = new SimpleDateFormat("MMM/dd/yyyy hh:mm a", Locale.ENGLISH).format(new Date(jsonObj.getLong("dt") * 1000));
                 String temp = main.getString("temp");
                 String tempFeelsLike = main.getString("feels_like");
-                String tempMin = main.getString("temp_min");
-                String tempMax = main.getString("temp_max");
                 String pressure = main.getString("pressure");
                 String humidity = main.getString("humidity");
 
@@ -198,9 +212,7 @@ public class WeatherToday extends Fragment {
                 String windSpeed = wind.getString("speed");
 
                 /*Getting value from JSON object in "weather" object*/
-                String weatherMain = weather.getString("main");
                 String weatherDescription = weather.getString("description");
-                String weatherIcon = weather.getString("icon");
 
                 relativeLayout.setVisibility(View.VISIBLE);
                 loader.setVisibility(View.GONE);
@@ -238,7 +250,7 @@ public class WeatherToday extends Fragment {
 
         //https://github.com/androdocs/Simple-HTTP-Request
         protected String doInBackground(String... args) {
-            return HttpRequest.excuteGet("https://api.openweathermap.org/data/2.5/forecast?q=" + currentLocation + "&appid=" + API_KEY + "&units=metric");
+            return HttpRequest.excuteGet(API_URL + "forecast?lat="+locationLatitude+ "&lon=" +locationLongitude+ "&units=metric&appid=" + API_KEY);
         }
 
         @SuppressLint("SetTextI18n")

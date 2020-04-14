@@ -3,7 +3,7 @@
 
     <string name="loading">"Loading. . . "</string>
 
-    <string name="error_message">Something is wrong!</string>
+    <string name="error_message">Something is wrong! \n You might wanna change your Location</string>
     <string name="image_not_found">Image not found.</string>
     <string name="today">Today</string>
     <string name="sunrise">Sunrise</string>

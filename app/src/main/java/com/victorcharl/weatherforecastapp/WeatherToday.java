@@ -8,11 +8,17 @@ import android.os.Build;
 import android.os.Bundle;
 
 import com.androdocs.httprequest.HttpRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,9 +33,13 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class WeatherToday extends Fragment {
 
@@ -42,6 +52,8 @@ public class WeatherToday extends Fragment {
     private String getWeatherForecastLocation;
 
     private static final String iconLocation = "https://openweathermap.org/img/wn/";
+
+    private DatabaseReference weathersRef = FirebaseOperations.weather();
 
     private String locationLatitude;
     private String locationLongitude;
@@ -264,6 +276,25 @@ public class WeatherToday extends Fragment {
                 /*get JSONObject from JSON file*/
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray list = jsonObject.getJSONArray("list");
+
+                //TODO: Store and retrieve from database
+                weathersRef.setValue(jsonObject.get("list").toString());
+                weathersRef.addValueEventListener(new ValueEventListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        List<String> myStringList = Collections.singletonList(dataSnapshot.getValue(String.class));
+                        //JSONArray jsonArray = jsnobject.getJSONArray("list");
+                        String mylist = myStringList.get(0);
+                        Log.d("testTag", "onPostExecute: " + myStringList.get(0));
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
 
                 /*fetching data for 5 days*/
                 for(int i = 0; i < list.length(); i+=8 ) {

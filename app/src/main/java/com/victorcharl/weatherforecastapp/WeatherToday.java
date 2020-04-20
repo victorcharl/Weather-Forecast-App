@@ -3,16 +3,24 @@ package com.victorcharl.weatherforecastapp;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 
 import com.androdocs.httprequest.HttpRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,9 +36,13 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class WeatherToday extends Fragment {
 
@@ -42,6 +55,10 @@ public class WeatherToday extends Fragment {
     private String getWeatherForecastLocation;
 
     private static final String iconLocation = "https://openweathermap.org/img/wn/";
+
+    private DatabaseReference weathersRef = FirebaseOperations.weather();
+
+    private JSONObject jsonObject;
 
     private String locationLatitude;
     private String locationLongitude;
@@ -151,8 +168,98 @@ public class WeatherToday extends Fragment {
             }
         }
 
-        //new getCurrentWeather().execute();
-        new getWeatherData().execute();
+        // check if network available
+        if (isNetworkAvailable()) {
+            //new getCurrentWeather().execute();
+            new getWeatherData().execute();
+        } else {
+            Toast.makeText(getContext(), "Your in offline mode", Toast.LENGTH_LONG).show();
+            weathersRef.addValueEventListener(new ValueEventListener() {
+                private ArrayList<String> get_temp_min = new ArrayList<>();
+                private ArrayList<String> get_temp_max = new ArrayList<>();
+                private ArrayList<String> get_temp_stat = new ArrayList<>();
+                private ArrayList<String> get_temp_icon_stat = new ArrayList<>();
+
+                @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    try {
+                        retrieveWeatherFromDb(dataSnapshot);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @SuppressLint("SetTextI18n")
+                private void retrieveWeatherFromDb(@NonNull DataSnapshot dataSnapshot) throws JSONException {
+                    JSONObject weatherObject = new JSONObject(Objects.requireNonNull(dataSnapshot.getValue(String.class)));
+                    JSONArray weatherList = weatherObject.getJSONArray("list");
+                    for(int i = 0; i < weatherList.length(); i+=8) {
+                        JSONObject myList = weatherList.getJSONObject(i);
+                        JSONObject main = myList.getJSONObject("main");
+                        JSONArray weather = myList.getJSONArray("weather");
+                        JSONObject stat = weather.getJSONObject(0);
+
+                        get_temp_min.add(main.getString("temp_min"));
+                        get_temp_max.add(main.getString("temp_max"));
+                        get_temp_stat.add(stat.getString("main"));
+                        get_temp_icon_stat.add(iconLocation + stat.getString("icon")+ "@2x.png");
+
+                        /*fetching data for today's weather*/
+                        if(i == 0 ){
+                            JSONObject city = weatherObject.getJSONObject("city");
+                            JSONObject wind = myList.getJSONObject("wind");
+
+                            /*fetching data and putting it in variable*/
+                            String address = city.getString("name") + ", " + city.getString("country");
+                            String updateTime = new SimpleDateFormat("MMM/dd/yyyy hh:mm a", Locale.ENGLISH).format(new Date(myList.getLong("dt") * 1000));
+                            String weatherDescription = stat.getString("description");
+                            String temp = main.getString("temp");
+                            String tempFeelsLike = main.getString("feels_like");
+                            long sunrise = city.getLong("sunrise");
+                            long sunset = city.getLong("sunset");
+                            String windSpeed = wind.getString("speed");
+                            String apressure = main.getString("sea_level");
+                            String gpressure = main.getString("grnd_level");
+                            String humidity = main.getString("humidity");
+
+                            /*populating today's weather and it's details*/
+                            location_txtVw.setText(address); //address
+                            dateAndTime_txtVw.setText("Updated at: " + updateTime);
+                            status_txtVw.setText(weatherDescription.substring(0, 1).toUpperCase() + weatherDescription.substring(1).toLowerCase());
+                            temperature_txtVw.setText(roundingOff(temp) + "°C");
+                            feelsLike_txtVw.setText("Feels Like : " + roundingOff(tempFeelsLike)  + "°C");
+                            sunrise_txtVw.setText(new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(new Date(sunrise * 1000)));
+                            sunset_txtVw.setText(new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(new Date(sunset * 1000)));
+                            wind_txtVw.setText(windSpeed + " km/hr");
+                            humidity_txtVw.setText(humidity + " %");
+                            apressure_txtVw.setText(apressure + " hPa");
+                            gpressure_txtVw.setText(gpressure + " hPa");
+
+                        }
+
+                    }
+
+                    /*Populating 5 days weather section*/
+                    TextView[] TV_temp_min = new TextView[]{day1min, day2min, day3min, day4min, day5min};
+                    TextView[] TV_temp_max = new TextView[]{day1max, day2max, day3max, day4max, day5max};
+                    TextView[] TV_temp_stat = new TextView[]{day1status, day2status, day3status, day4status, day5status};
+
+                    for(int j = 0;  j < TV_temp_max.length; j++) {
+                        TV_temp_min[j].setText(roundingOff(get_temp_min.get(j)) + "°");
+                        TV_temp_max[j].setText(roundingOff(get_temp_max.get(j)) + "°");
+                        TV_temp_stat[j].setText(get_temp_stat.get(j));
+                    }
+
+                    displayImageFromDb(get_temp_icon_stat);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
 
         return view;
     }
@@ -262,8 +369,10 @@ public class WeatherToday extends Fragment {
 
 
                 /*get JSONObject from JSON file*/
-                JSONObject jsonObject = new JSONObject(result);
+                jsonObject = new JSONObject(result);
                 JSONArray list = jsonObject.getJSONArray("list");
+                weathersRef.removeValue();
+                weathersRef.setValue(jsonObject.toString());
 
                 /*fetching data for 5 days*/
                 for(int i = 0; i < list.length(); i+=8 ) {
@@ -347,6 +456,24 @@ public class WeatherToday extends Fragment {
         for (int i = 0; i < photoStat.length; i++){
             Picasso.get().load(temp_icon_stat.get(i)).into(photoStat[i]);
         }
+    }
+
+    private void displayImageFromDb(ArrayList<String> get_temp_icon_stat){
+
+        ImageView[] photoStat = new ImageView[]{day1photo, day2photo, day3photo, day4photo, day5photo};
+
+        /*https://stackoverflow.com/questions/6407324/how-to-display-image-from-url-on-android*/
+        for (int i = 0; i < photoStat.length; i++){
+            Picasso.get().load(get_temp_icon_stat.get(i)).into(photoStat[i]);
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager)  Objects.requireNonNull(getActivity()).getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = Objects.requireNonNull(connectivityManager).getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
 }

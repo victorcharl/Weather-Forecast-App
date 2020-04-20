@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "612828540544",
+    "firebase_url": "https://weatherforecastapp-57a9b.firebaseio.com",
+    "project_id": "weatherforecastapp-57a9b",
+    "storage_bucket": "weatherforecastapp-57a9b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612828540544:android:d316912c74e48762438065",
+        "android_client_info": {
+          "package_name": "com.victorcharl.weatherforecastapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "612828540544-dunb9jcbfan7mp4elnhfcv4lqt1rbifk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyTtzRbt7eUM5wnKDoKgw8eTGZbIvQQuY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "612828540544-dunb9jcbfan7mp4elnhfcv4lqt1rbifk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
